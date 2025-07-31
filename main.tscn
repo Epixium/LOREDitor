@@ -1,0 +1,152 @@
+[gd_scene load_steps=5 format=3 uid="uid://60lj2c38h7t6"]
+
+[ext_resource type="Script" uid="uid://bft8lq1xry5v4" path="res://save_editor.gd" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://b14l70lhusqjx" path="res://save_tree.tscn" id="2_0xm2m"]
+[ext_resource type="Script" uid="uid://cfgqc552srslx" path="res://save_selector.gd" id="3_h2yge"]
+[ext_resource type="Script" uid="uid://cjc6gs6k30xn4" path="res://save_type.gd" id="4_1bvp3"]
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ig7tw")
+
+[node name="SaveTree" parent="." node_paths=PackedStringArray("SaveAlert") instance=ExtResource("2_0xm2m")]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.1
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+SaveAlert = NodePath("../SaveAlert")
+
+[node name="FileSaver" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchor_left = 0.1
+anchor_right = 1.0
+anchor_bottom = 0.1
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+grow_horizontal = 2
+
+[node name="SaveButton" type="Button" parent="FileSaver"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.9
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "Save"
+autowrap_mode = 3
+
+[node name="FileButton" type="Button" parent="FileSaver"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.9
+anchor_bottom = 1.0
+offset_right = -10.0
+offset_bottom = 0.199997
+grow_vertical = 2
+text = "Select a filepath!"
+autowrap_mode = 3
+
+[node name="FileDialog" type="FileDialog" parent="FileSaver"]
+title = "Open a File"
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.lored")
+use_native_dialog = true
+script = ExtResource("3_h2yge")
+
+[node name="ClipboardSaver" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchor_left = 0.1
+anchor_right = 1.0
+anchor_bottom = 0.1
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+grow_horizontal = 2
+
+[node name="ClipFileButton" type="Button" parent="ClipboardSaver"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.9
+anchor_bottom = 1.0
+offset_right = -10.0
+offset_bottom = 0.199997
+grow_vertical = 2
+text = "Load from clipboard!"
+autowrap_mode = 3
+
+[node name="ClipSaveButton" type="Button" parent="ClipboardSaver"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.9
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "Save to clipboard"
+autowrap_mode = 3
+
+[node name="SaveType" type="OptionButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.1
+anchor_bottom = 0.1
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 1.8
+autowrap_mode = 3
+selected = 0
+item_count = 2
+popup/item_0/text = "File"
+popup/item_0/id = 0
+popup/item_1/text = "Clipboard"
+popup/item_1/id = 1
+script = ExtResource("4_1bvp3")
+
+[node name="SaveAlert" type="RichTextLabel" parent="."]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+clip_contents = false
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.8
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.373884, 0.662685, 1.92523e-07, 1)
+theme_override_colors/font_outline_color = Color(0.113725, 0.278431, 0.184314, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/normal_font_size = 24
+bbcode_enabled = true
+text = "[wave amp=20.0 freq=6.0]Saved file at {filepath}![/wave]"
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[connection signal="pressed" from="FileSaver/SaveButton" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="FileSaver/FileButton" to="FileSaver/FileDialog" method="_on_file_button_pressed"]
+[connection signal="file_selected" from="FileSaver/FileDialog" to="." method="_on_file_dialog_file_selected"]
+[connection signal="pressed" from="ClipboardSaver/ClipFileButton" to="." method="_on_clip_file_button_pressed"]
+[connection signal="pressed" from="ClipboardSaver/ClipSaveButton" to="." method="_on_clip_save_button_pressed"]
+[connection signal="item_selected" from="SaveType" to="SaveType" method="_on_item_selected"]

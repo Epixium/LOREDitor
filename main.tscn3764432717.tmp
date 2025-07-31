@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://60lj2c38h7t6"]
+
+[ext_resource type="Script" uid="uid://bft8lq1xry5v4" path="res://save_editor.gd" id="1_ig7tw"]
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ig7tw")

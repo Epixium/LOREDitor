@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://b14l70lhusqjx"]
+
+[ext_resource type="Script" uid="uid://1u0l6fnstwx2" path="res://save_tree.gd" id="1_fr7bx"]
+
+[node name="SaveTree" type="Tree"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 2
+hide_root = true
+script = ExtResource("1_fr7bx")
