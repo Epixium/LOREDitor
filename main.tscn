@@ -23,6 +23,7 @@ offset_left = 10.0
 offset_top = 10.0
 offset_right = -10.0
 offset_bottom = -10.0
+columns = 2
 SaveAlert = NodePath("../SaveAlert")
 
 [node name="FileSaver" type="Control" parent="."]
