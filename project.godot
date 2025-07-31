@@ -14,6 +14,7 @@ config/name="LOREDitor"
 config/description="a save editor for the game LORED by Drillur
 made by Epixium"
 config/version="1.0.0"
+run/main_scene="uid://60lj2c38h7t6"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="uid://xjoaoeorra0f"
 
