@@ -1,9 +1,17 @@
-[gd_scene load_steps=5 format=3 uid="uid://60lj2c38h7t6"]
+[gd_scene load_steps=7 format=3 uid="uid://60lj2c38h7t6"]
 
 [ext_resource type="Script" uid="uid://bft8lq1xry5v4" path="res://save_editor.gd" id="1_ig7tw"]
 [ext_resource type="PackedScene" uid="uid://b14l70lhusqjx" path="res://save_tree.tscn" id="2_0xm2m"]
 [ext_resource type="Script" uid="uid://cfgqc552srslx" path="res://save_selector.gd" id="3_h2yge"]
 [ext_resource type="Script" uid="uid://cjc6gs6k30xn4" path="res://save_type.gd" id="4_1bvp3"]
+[ext_resource type="Script" uid="uid://bgtcgwoixrs7c" path="res://save_alert.gd" id="5_lquwl"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lquwl"]
+bg_color = Color(0.158472, 0.158472, 0.158472, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -23,7 +31,6 @@ offset_left = 10.0
 offset_top = 10.0
 offset_right = -10.0
 offset_bottom = -10.0
-columns = 2
 SaveAlert = NodePath("../SaveAlert")
 
 [node name="FileSaver" type="Control" parent="."]
@@ -144,6 +151,76 @@ bbcode_enabled = true
 text = "[wave amp=20.0 freq=6.0]Saved file at {filepath}![/wave]"
 horizontal_alignment = 2
 vertical_alignment = 2
+script = ExtResource("5_lquwl")
+
+[node name="SaveAllPopup" type="Control" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="SaveAllPopup"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.392157)
+
+[node name="Panel" type="Panel" parent="SaveAllPopup"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2
+anchor_top = 0.2
+anchor_right = 0.8
+anchor_bottom = 0.8
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_lquwl")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SaveAllPopup/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_right = -0.199951
+grow_horizontal = 2
+text = "Unsaved changes detected!
+Would you like to save all changes?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SaveAllPopup/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="SaveChanges" type="Button" parent="SaveAllPopup/Panel/HBoxContainer"]
+modulate = Color(0.190723, 0.801075, 3.85046e-07, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Save Changes"
+
+[node name="DoNot" type="Button" parent="SaveAllPopup/Panel/HBoxContainer"]
+modulate = Color(0.874772, 0, 0.11891, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Do Not"
 
 [connection signal="pressed" from="FileSaver/SaveButton" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="FileSaver/FileButton" to="FileSaver/FileDialog" method="_on_file_button_pressed"]
@@ -151,3 +228,5 @@ vertical_alignment = 2
 [connection signal="pressed" from="ClipboardSaver/ClipFileButton" to="." method="_on_clip_file_button_pressed"]
 [connection signal="pressed" from="ClipboardSaver/ClipSaveButton" to="." method="_on_clip_save_button_pressed"]
 [connection signal="item_selected" from="SaveType" to="SaveType" method="_on_item_selected"]
+[connection signal="pressed" from="SaveAllPopup/Panel/HBoxContainer/SaveChanges" to="." method="_on_save_changes_pressed"]
+[connection signal="pressed" from="SaveAllPopup/Panel/HBoxContainer/DoNot" to="." method="_on_do_not_pressed"]
